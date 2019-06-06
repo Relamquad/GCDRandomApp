@@ -26,7 +26,7 @@ class MyModel {
         return randomString
     }
     // MARK: - Generator Random Strings
-    class func generatorRandomStrings(length: Int) -> Array<String> {
+    class func generatorRandomStrings(length: Int) {
 
         var array = [String]()
         for _ in 0 ... length {
@@ -36,7 +36,6 @@ class MyModel {
 
         }
         
-        return array
     }
     
     class func addToCoreData(string: String){
