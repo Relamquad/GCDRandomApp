@@ -19,8 +19,8 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         let queue = DispatchQueue.global(qos: .background)
         queue.async {
-            MyModel.generatorRandomStrings(length: 1000)
-            DispatchQueue.main.async {
+            MyModel.generatorRandomStrings(length: 100000)
+            DispatchQueue.main.sync {
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let context = appDelegate.persistentContainer.viewContext
                 let fetchRequest : NSFetchRequest<Titles> = Titles.fetchRequest()

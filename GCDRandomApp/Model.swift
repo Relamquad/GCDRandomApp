@@ -40,16 +40,24 @@ class MyModel {
     }
     
     class func addToCoreData(string: String){
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Titles", in: context)
-        let titleObject = NSManagedObject(entity: entity!, insertInto: context) as! Titles
-        titleObject.title = string 
+        let privateManagedObjectContext: NSManagedObjectContext = {
+            let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            moc.parent = context
+            return moc
+        }()
+        let titleObject = NSEntityDescription.insertNewObject(forEntityName: "Titles", into: privateManagedObjectContext) as! Titles
+        titleObject.title = string
+        privateManagedObjectContext.perform {
         do {
-            try context.save()
+            try privateManagedObjectContext.save()
             print("All okey!!!!")
         } catch {
             print(error.localizedDescription)
+            }
+            
         }
     }
 }
